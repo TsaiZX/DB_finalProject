@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>System of course management</title>
+	</head>
+	<body>	
+		<h1 align="center">System of course management</h1>
+		<table border="1"  , align = 'center'>
+			<td>
+				<button onclick="window.location.href='{{ url_for("search") }}'">Search</button>
+			</td>
+			<td>
+				<button onclick="window.location.href='{{ url_for("insert") }}'">insert</button>
+			</td>
+			<td>
+				<button onclick="window.location.href='{{ url_for("delete") }}'">delete</button>
+			</td>
+			<td>
+				<button onclick="window.location.href='{{ url_for("modify") }}'">modify</button>
+			</td>
+		</table>
+	</body>
+</html>
+
+

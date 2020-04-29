@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>課程資料管理系統</title>
+	</head>
+	<body>	
+        <h1 align="center">System of course management</h1>
+        <HR SIZE=5>
+		<h2 align="center">Delete</h2>
+		<form align = 'center' action="/delete_get_data" method="post">
+			<label for="table_name">Table Name：</label>
+			<input type="radio" name="table_name" value="course">Course
+			<input type="radio" name="table_name" value="grade">Grade
+			<input type="radio" name="table_name" value="student">student
+			<input type="submit" value="Submit">
+		</form>
+
+		{% if output_data %}
+		<form align = 'center' action="/delete_data" method="post">
+            <table border="1" cellpadding="5" cellspacing="5" , align = 'center'>
+				<tr>
+					<td>
+						Table Name 
+					</td>
+					<td >
+						<input type="text" value = {{table_name}} name = "table_name" readonly="true">
+					</td>
+				</tr>
+				{% if table_name == "course" %}
+				<tr>
+					<td>
+						course_id
+					</td>
+					<td>
+						<input type="text" name = "course_id">
+					</td>
+				</tr>
+				{% elif table_name == "student" %}
+				<tr>
+					<td>
+						student_id
+					</td>
+					<td>
+						<input type="text" name = "student_id">
+					</td>
+				</tr>
+				{% elif table_name == "grade" %}
+				<tr>
+					<td>
+						student_id
+					</td>
+					<td>
+						<input type="text" name = "student_id">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						course_id
+					</td>
+					<td>
+						<input type="text" name = "course_id">
+					</td>
+				</tr>
+
+
+				{% endif %}
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="delete">
+					</td>
+				</tr>
+			</table>
+		</form>
+        {% endif %}
+	</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>System of course management</title>
+	</head>
+	<body>	
+        <h1 align="center">System of course management</h1>
+        <HR SIZE=5>
+        <h2 align="center">查詢</h1>
+        <form align = 'center' action="/search_table" method="post">
+            <label for="table_name">Table Name：</label>
+            <input type="radio" name="table_name" value="course">Course
+            <input type="radio" name="table_name" value="grade">Grade
+            <input type="radio" name="table_name" value="student">student
+            <input type="submit" value="Submit">
+        </form>
+        
+        <table border="1"  , align = 'left'>
+            <tr>
+                <td>
+                <button onclick="window.location.href='{{ url_for("search") }}'">Search</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <button onclick="window.location.href='{{ url_for("insert") }}'">insert</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <button onclick="window.location.href='{{ url_for("delete") }}'">delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <button onclick="window.location.href='{{ url_for("modify") }}'">modify</button>
+                </td>
+            </tr>
+        </table>
+        
+        {% if output_data %}
+            <table border="1" cellpadding="5" cellspacing="5" , align = 'center'>
+                <tr>
+                    {% for row in title %}
+                        <td>
+                            {{ row[0]}}
+                        </td>
+                    {% endfor %}
+                </tr>
+                
+                {% for row in output_data %}
+                    <tr>
+                    {% for d in row %}
+                        <td>{{ d }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+	</body>
+</html>

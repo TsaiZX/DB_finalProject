@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>System of course management</title>
+	</head>
+	<body>	
+        <h1 align="center">System of course management</h1>
+        <HR SIZE=5>
+		<h2 align="center">Modify</h2>
+		<form align = 'center' action="/Modify_get_data" method="post">
+			<label for="table_name">Table Name：</label>
+			<input type="radio" name="table_name" value="course">Course
+			<input type="radio" name="table_name" value="grade">Grade
+			<input type="radio" name="table_name" value="student">student
+			<input type="submit" value="Submit">
+		</form>
+		{% if output_data %}
+		<form align = 'center' action="/modify_data" method="post">
+            <table border="1" cellpadding="5" cellspacing="5" , align = 'center'>
+				<tr>
+					<td>
+						Table Name 
+					</td>
+					<td >
+						<input type="text" value = {{table_name}} name = "table_name" readonly="true">
+					</td>
+				</tr>
+				{% for row in title %}
+				<tr>
+					<td>
+						{{ row[0]}}
+					</td>
+					<td>
+						<input type="text" name = {{row[0]}}>
+					</td>
+				</tr>
+				{% endfor %}
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="Modify">
+					</td>
+				</tr>
+			</table>
+		</form>
+        {% endif %}
+	</body>
+</html>
