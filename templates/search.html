@@ -1,50 +1,62 @@
+
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>System of course management</title>
-	</head>
-	<body>	
+<head>
+    <meta charset="utf-8">
+    <title>System of course management</title>
+    <link href="{{url_for('static' ,filename='css/styles.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static' ,filename='css/custom-responsive-styles.css')}}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{url_for('static' ,filename='js/jquery-3.2.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static' ,filename='js/all-plugins.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static' ,filename='js/plugins-activate.js')}}"></script>
+</head>
+<body id="page-top">
+    <!-- Navigation -->
+    <a class="menu-toggle rounded" href="#">
+        <i class="fa fa-bars"></i>
+    </a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a  href="#Header"></a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a  href="{{ url_for('index') }}">Home</a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a  href="{{ url_for('insert') }}">Insert</a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a  href="{{ url_for('delete') }}">Delete</a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="{{ url_for('modify') }}">Modify</a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="{{ url_for('search') }}">Search</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Content -->
+    <section id="Banner" class="content-section">
+    <div class="container content-wrap text-center">
         <h1 align="center">System of course management</h1>
         <HR SIZE=5>
         <h2 align="center">查詢</h1>
         <form align = 'center' action="/search_table" method="post">
-            <label for="table_name">Table Name：</label>
-            <input type="radio" name="table_name" value="course">Course
-            <input type="radio" name="table_name" value="grade">Grade
-            <input type="radio" name="table_name" value="student">student
+            <input type="radio" name="table_name" value="course" >Course
+            <input type="radio" name="table_name" value="student" >student<br>
+            Id: <input type="TEXT" name="id">
             <input type="submit" value="Submit">
         </form>
-        
-        <table border="1"  , align = 'left'>
-            <tr>
-                <td>
-                <button onclick="window.location.href='{{ url_for("search") }}'">Search</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <button onclick="window.location.href='{{ url_for("insert") }}'">insert</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <button onclick="window.location.href='{{ url_for("delete") }}'">delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <button onclick="window.location.href='{{ url_for("modify") }}'">modify</button>
-                </td>
-            </tr>
-        </table>
         
         {% if output_data %}
             <table border="1" cellpadding="5" cellspacing="5" , align = 'center'>
                 <tr>
                     {% for row in title %}
                         <td>
-                            {{ row[0]}}
+                            {{ row}}
                         </td>
                     {% endfor %}
                 </tr>
@@ -58,6 +70,8 @@
                 {% endfor %}
             </table>
         {% endif %}
+    </div>
 
-	</body>
+    </section>
+</body>
 </html>

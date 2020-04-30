@@ -45,12 +45,18 @@ def insert():
 @app.route('/search_table',methods=['POST'])
 def search_table():
     if request.method == 'POST':
+        get_id	= request.form.get('id')
         table_name = request.form.get('table_name')
-        # temp = db.Table(table_name ,db.metadata ,autoload = True ,autoload_with = db.engine)
-        # results = db.session.query(temp).all()
-        results = db.session.execute("select * from %s" %(table_name))
-        title = db.session.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='%s'"%(table_name))
-        return render_template('search.html', output_data = results.fetchall() ,title = title)
+
+        if table_name == 'course':
+            SQL = "Select grade.course_id ,student.student_id ,student.student_name ,grade.score From  student ,grade WHERE grade.course_id = '%s' and student.student_id = grade.student_id"%(get_id)
+        elif table_name == 'student':
+            SQL = "Select grade.student_id ,course.course_id ,course.course_name ,grade.score From course ,grade WHERE grade.student_id = '%s' and  grade.course_id = course.course_id"%(get_id)
+
+        results = db.session.execute(SQL)
+        return render_template('search.html', output_data = results.fetchall() ,title = results.keys())
+
+
 
 @app.route('/insert_get_data',methods=['POST'])
 def insert_get_data():
@@ -72,9 +78,17 @@ def delete_get_data():
 def Modify_get_data():
     if request.method == 'POST':
         table_name = request.form.get('table_name')
-        results = db.session.execute("select * from %s" %(table_name))
-        title = db.session.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='%s'"%(table_name))
-        return render_template('modify.html', output_data = results.fetchall() ,title = title ,table_name = table_name)
+        if table_name == 'grade':
+            modify_student_id = request.form.get('modify_student_id')
+            SQL = "SELECT * from %s WHERE student_id = '%s'"%(table_name ,modify_student_id)
+        elif table_name == 'course':
+            modify_course_id = request.form.get('modify_course_id')
+            SQL = "SELECT * from %s WHERE course_id = '%s'"%(table_name ,modify_course_id)
+        elif table_name == 'student':
+            modify_student_id = request.form.get('modify_student_id')
+            SQL = "SELECT * from %s WHERE student_id = '%s'"%(table_name ,modify_student_id)
+        results = db.session.execute(SQL)
+        return render_template('modify.html', output_data = results.fetchall() ,title = results.keys() ,table_name = table_name , data_count = len(results.keys()))
 
 
 @app.route('/insert_data',methods=['POST'])

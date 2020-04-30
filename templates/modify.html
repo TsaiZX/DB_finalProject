@@ -1,48 +1,116 @@
+
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
 		<title>System of course management</title>
+		<link href="{{url_for('static' ,filename='css/styles.css')}}" rel="stylesheet" type="text/css">
+		<link href="{{url_for('static' ,filename='css/custom-responsive-styles.css')}}" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="{{url_for('static' ,filename='js/jquery-3.2.1.min.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('static' ,filename='js/all-plugins.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('static' ,filename='js/plugins-activate.js')}}"></script>
+		<script type="text/javascript">
+			function showhide(obj){
+				_course_id.style.display = 'none';
+				_student_id.style.display = 'none';
+			   obj.style.display = 'block';
+			}
+		</script> 
 	</head>
-	<body>	
-        <h1 align="center">System of course management</h1>
-        <HR SIZE=5>
-		<h2 align="center">Modify</h2>
-		<form align = 'center' action="/Modify_get_data" method="post">
-			<label for="table_name">Table Name：</label>
-			<input type="radio" name="table_name" value="course">Course
-			<input type="radio" name="table_name" value="grade">Grade
-			<input type="radio" name="table_name" value="student">student
-			<input type="submit" value="Submit">
-		</form>
-		{% if output_data %}
-		<form align = 'center' action="/modify_data" method="post">
-            <table border="1" cellpadding="5" cellspacing="5" , align = 'center'>
-				<tr>
-					<td>
-						Table Name 
-					</td>
-					<td >
-						<input type="text" value = {{table_name}} name = "table_name" readonly="true">
-					</td>
-				</tr>
-				{% for row in title %}
-				<tr>
-					<td>
-						{{ row[0]}}
-					</td>
-					<td>
-						<input type="text" name = {{row[0]}}>
-					</td>
-				</tr>
-				{% endfor %}
-				<tr>
-					<td colspan="2">
-						<input type="submit" value="Modify">
-					</td>
-				</tr>
-			</table>
-		</form>
-        {% endif %}
+	<body>
+		<!-- Navigation -->
+		<a class="menu-toggle rounded" href="#">
+			<i class="fa fa-bars"></i>
+		</a>
+		<nav id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand">
+					<a  href="#Header"></a>
+				</li>
+				<li class="sidebar-nav-item">
+					<a  href="{{ url_for('index') }}">Home</a>
+				</li>
+				<li class="sidebar-nav-item">
+					<a  href="{{ url_for('insert') }}">Insert</a>
+				</li>
+				<li class="sidebar-nav-item">
+					<a  href="{{ url_for('delete') }}">Delete</a>
+				</li>
+				<li class="sidebar-nav-item">
+					<a href="{{ url_for('modify') }}">Modify</a>
+				</li>
+				<li class="sidebar-nav-item">
+					<a href="{{ url_for('search') }}">Search</a>
+				</li>
+			</ul>
+		</nav>
+		<section id="Banner" class="content-section">
+		<div class="container content-wrap text-center">	
+			<h1 align="center">System of course management</h1>
+			<HR SIZE=5>
+			<h2 align="center">Modify</h2>
+			<form align = 'center' action="/Modify_get_data" method="post">
+				<input type="radio" name="table_name" value="course" onfocus=showhide(_course_id)>Course
+				<input type="radio" name="table_name" value="grade" onfocus=showhide(_student_id)>Grade
+				<input type="radio" name="table_name" value="student" onfocus=showhide(_student_id)>student
+				<div id='_course_id' >
+					<ul>
+						course_id : <input type="TEXT" name="modify_course_id">
+						<input type="submit" value="Submit">
+					</ul>
+					
+				</div>
+				<div id='_student_id' style='display:none' >
+					<ul>
+						student_id : <input type="TEXT" name="modify_student_id">
+						<input type="submit" value="Submit">
+					</ul>
+				</div>
+				
+			</form>
+			{% if output_data %}
+			<form align = 'center' action="/modify_data" method="post">
+				<table border="1" cellpadding="5" cellspacing="5" , align = 'center'>
+					<tr>
+						<td>
+							Table Name 
+						</td>
+						<td >
+							old data
+						</td>
+						<td >
+							<input type="text" value = {{table_name}} name = "table_name" readonly="true">
+						</td>
+					</tr>
+					{% for index in range(data_count) %}
+						<tr>
+							<td>
+								{{title[index]}}
+							</td>
+							<td>
+								{{output_data[0][index]}}
+							</td>
+							<td>
+								{% if title[index] == "student_id" %}
+									<input type="text" name = {{row_name}}  readonly="true" value = {{output_data[0][index]}}>
+								{% elif title[index] == "course_id" %}
+									<input type="text" name = {{row_name}}  readonly="true" value = {{output_data[0][index]}}>
+								{% else %}
+									<input type="text" name = {{row_name}}>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<td colspan="3">
+							<input type="submit" value="Modify">
+						</td>
+					</tr>
+				</table>
+			</form>
+			{% endif %}
+		</div>
+		</section>
 	</body>
 </html>
