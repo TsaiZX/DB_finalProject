@@ -93,11 +93,11 @@
 							</td>
 							<td>
 								{% if title[index] == "student_id" %}
-									<input type="text" name = {{row_name}}  readonly="true" value = {{output_data[0][index]}}>
+									<input type="text" name = {{title[index]}} readonly="true" value = {{output_data[0][index]}}>
 								{% elif title[index] == "course_id" %}
-									<input type="text" name = {{row_name}}  readonly="true" value = {{output_data[0][index]}}>
+									<input type="text" name = {{title[index]}}  readonly="true" value = {{output_data[0][index]}}>
 								{% else %}
-									<input type="text" name = {{row_name}}>
+									<input type="text" name = {{title[index]}}>
 								{% endif %}
 							</td>
 						</tr>

@@ -3,23 +3,23 @@ from flask import Flask, jsonify, render_template, request, redirect, flash
 from flask import url_for
 from flask import Flask
 
+
 app = Flask(__name__)
-
-
 POSTGRES = {
-    'user': 'test',
-    'pw': 'test',
+    'user': 'postgres',
+    'pw': 'root',
     'db': 'Student',
     'host': 'localhost',
-    'port': '5432',
+    'port': '5432'
 }
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jaqgiqnxlinqrl:53d4aa27de2fa7fea19b36ed9aeecf36e67b1575a0d5b8475ff3e7e14b1701b4@ec2-54-81-37-115.compute-1.amazonaws.com:5432/dqaajb7e1ogsd'
 db = SQLAlchemy(app)
 
 Grade = db.Table('grade' ,db.metadata ,autoload = True ,autoload_with = db.engine)
 Course = db.Table('course' ,db.metadata ,autoload = True ,autoload_with = db.engine)
 tudent = db.Table('student' ,db.metadata ,autoload = True ,autoload_with = db.engine)
+
 
 
 @app.route('/')
@@ -99,25 +99,23 @@ def insert_data():
             student_id	= request.form.get('student_id')
             course_id = request.form.get('course_id')
             score = request.form.get('score')
-            sql = "INSERT INTO %s (student_id, course_id, score) VALUES (%s,%s,%s);"%(table_name ,student_id ,course_id ,score)
+            sql = "INSERT INTO %s (student_id, course_id, score) VALUES ('%s','%s','%s');"%(table_name ,student_id ,course_id ,score)
         elif table_name == 'course':
             course_id	= request.form.get('course_id')
             course_name = request.form.get('course_name')
             credit = request.form.get('credit')
-            sql = "INSERT INTO %s (course_id, course_name, credit) VALUES (%s,%s,%s);"%(table_name ,course_id ,course_name ,credit)
+            sql = "INSERT INTO %s (course_id, course_name, credit) VALUES ('%s','%s','%s');"%(table_name ,course_id ,course_name ,credit)
         elif table_name == 'student':
             student_id	= request.form.get('student_id')
             student_name = request.form.get('student_name')
             gender = request.form.get('gender')
             birthday = request.form.get('birthday')
             fruit = request.form.get('fruit')
-            sql = "INSERT INTO %s (student_name, gender, birthday,fruit) VALUES (%s,%s,%s,%s,%s);"%(table_name ,student_id ,student_name ,gender,birthday,fruit)
+            sql = "INSERT INTO %s (student_name, gender, birthday,fruit) VALUES ('%s','%s','%s','%s','%s');"%(table_name ,student_id ,student_name ,gender,birthday,fruit)
         db.session.execute(sql)
         db.session.commit()
         results = db.session.execute("select * from %s" %(table_name))
-        title = db.session.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='%s'"%(table_name))
-        
-        return render_template('search.html', output_data = results.fetchall() ,title = title)
+        return render_template('search.html', output_data = results.fetchall() ,title = results.keys())
 
 @app.route('/delete_data',methods=['POST'])
 def delete_data():
@@ -136,8 +134,8 @@ def delete_data():
         db.session.execute(sql)
         db.session.commit()
         results = db.session.execute("select * from %s" %(table_name))
-        title = db.session.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='%s'"%(table_name))
-        return render_template('search.html', output_data = results.fetchall() ,title = title)
+
+        return render_template('search.html', output_data = results.fetchall() ,title = results.keys())
 
 @app.route('/modify_data',methods=['POST'])
 def modify_data():
@@ -152,6 +150,7 @@ def modify_data():
             course_id	= request.form.get('course_id')
             course_name = request.form.get('course_name')
             credit = request.form.get('credit')
+            print(course_id , course_name ,credit)
             sql = "UPDATE %s SET course_name ='%s' ,credit =%s WHERE course_id ='%s'"%(table_name ,course_name,credit ,course_id)
         elif table_name == 'student':
             student_id	= request.form.get('student_id')
@@ -163,8 +162,7 @@ def modify_data():
         db.session.execute(sql)
         db.session.commit()
         results = db.session.execute("select * from %s" %(table_name))
-        title = db.session.execute("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='%s'"%(table_name))
-        return render_template('search.html', output_data = results.fetchall() ,title = title)
+        return render_template('search.html', output_data = results.fetchall() ,title = results.keys())
 
 if __name__ == '__main__':
     app.debug = True
