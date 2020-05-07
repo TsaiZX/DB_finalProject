@@ -6,14 +6,14 @@ from flask import Flask
 
 app = Flask(__name__)
 POSTGRES = {
-    'user': 'postgres',
-    'pw': 'root',
-    'db': 'Student',
-    'host': 'localhost',
+    'user': 'jaqgiqnxlinqrl',
+    'pw': '53d4aa27de2fa7fea19b36ed9aeecf36e67b1575a0d5b8475ff3e7e14b1701b4',
+    'db': 'dqaajb7e1ogsd',
+    'host': 'ec2-54-81-37-115.compute-1.amazonaws.com',
     'port': '5432'
 }
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jaqgiqnxlinqrl:53d4aa27de2fa7fea19b36ed9aeecf36e67b1575a0d5b8475ff3e7e14b1701b4@ec2-54-81-37-115.compute-1.amazonaws.com:5432/dqaajb7e1ogsd'
+app.config['SQLALCHEMY_DATABASE_URI'] ='postgres://jaqgiqnxlinqrl:53d4aa27de2fa7fea19b36ed9aeecf36e67b1575a0d5b8475ff3e7e14b1701b4@ec2-54-81-37-115.compute-1.amazonaws.com:5432/dqaajb7e1ogsd'
 db = SQLAlchemy(app)
 
 Grade = db.Table('grade' ,db.metadata ,autoload = True ,autoload_with = db.engine)
