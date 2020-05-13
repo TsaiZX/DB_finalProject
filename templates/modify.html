@@ -14,6 +14,7 @@
 			function showhide(obj){
 				_course_id.style.display = 'none';
 				_student_id.style.display = 'none';
+				_grade.style.display = 'none';
 			   obj.style.display = 'block';
 			}
 		</script> 
@@ -52,18 +53,24 @@
 			<h2 align="center">Modify</h2>
 			<form align = 'center' action="/Modify_get_data" method="post">
 				<input type="radio" name="table_name" value="course" onfocus=showhide(_course_id)>Course
-				<input type="radio" name="table_name" value="grade" onfocus=showhide(_student_id)>Grade
+				<input type="radio" name="table_name" value="grade" onfocus=showhide(_grade)>Grade
 				<input type="radio" name="table_name" value="student" onfocus=showhide(_student_id)>student
 				<div id='_course_id' >
 					<ul>
 						course_id : <input type="TEXT" name="modify_course_id">
 						<input type="submit" value="Submit">
 					</ul>
-					
 				</div>
 				<div id='_student_id' style='display:none' >
 					<ul>
 						student_id : <input type="TEXT" name="modify_student_id">
+						<input type="submit" value="Submit">
+					</ul>
+				</div>
+				<div id='_grade' style='display:none' >
+					<ul>
+						student_id : <input type="TEXT" name="modify_grade_student_id">
+						course_id : <input type="TEXT" name="modify_grade_course_id">
 						<input type="submit" value="Submit">
 					</ul>
 				</div>

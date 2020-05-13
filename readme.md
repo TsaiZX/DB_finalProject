@@ -1,6 +1,7 @@
 # DataBase final project template
 
 ## Flask + PostgreSQL
+    Creater Database 
     run app.py to start the server
     then Running on http://127.0.0.1:5000
 
@@ -13,4 +14,4 @@
 ## Possible problems and Solution
 - Permission denied for relation : GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO 'someuser';
 
-- FATAL: password authentication failed for user : https://www.itread01.com/content/1555951204.html
+- FATAL: password authentication failed for user : 編輯 postgreSQL 目錄下的 pg_hba.conf ,將 md5 認證修改成 trust 認證，編輯後退出儲存
