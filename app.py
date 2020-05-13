@@ -174,7 +174,6 @@ def modify_data():
             course_id	= request.form.get('course_id')
             course_name = request.form.get('course_name')
             credit = request.form.get('credit')
-            print(course_id , course_name ,credit)
             sql = "UPDATE %s SET course_name ='%s' ,credit =%s WHERE course_id ='%s'"%(table_name ,course_name,credit ,course_id)
         elif table_name == 'student':
             student_id	= request.form.get('student_id')
