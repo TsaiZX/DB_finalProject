@@ -1,7 +1,7 @@
 # DataBase final project template
 
 ## Flask + PostgreSQL
-    Creater Database 
+    Create Database 
     run app.py to start the server
     then Running on http://127.0.0.1:5000
 
